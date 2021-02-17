@@ -12,9 +12,6 @@ let currPlayer = 1;
 const board = [];
 
 const makeBoard = () => {
-	//discuss with mentor --> how to make below two solutions work?
-	// board.push(...Array(HEIGHT).fill([ ...Array(WIDTH).fill(null) ]));
-	// board.push([ ...Array(HEIGHT) ].map(() => Array(WIDTH).fill(null)));
 	for (let i = 0; i < HEIGHT; i++) {
 		board.push(Array(WIDTH).fill(null));
 	}
@@ -64,10 +61,8 @@ const placeInTable = (y, x) => {
 function endGame(msg) {
 	setTimeout(() => {
 		alert(msg);
-	}, 200);
-	setTimeout(() => {
 		location.reload();
-	}, 300);
+	}, 200);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -87,11 +82,15 @@ function handleClick(evt) {
 	if (checkForWin()) {
 		return endGame(`Player ${currPlayer} won!`);
 	}
+
 	if (checkForTie()) {
 		return endGame(`It's a tie!`);
 	}
-	currPlayer = currPlayer === 1 ? 2 : 1;
+
+	currPlayer = switchPlayer();
 }
+
+const switchPlayer = () => (currPlayer === 1 ? 2 : 1);
 
 const checkForTie = () => {
 	return board.every((row) => {
